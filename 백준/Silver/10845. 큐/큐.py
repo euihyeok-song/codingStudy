@@ -19,9 +19,12 @@ for _ in range(num):
             print(-1)
         else:
         # reverse -> pop -> reverse를 이용해서 맨 앞의 원소를 제거
-            queue.reverse()
-            print(queue.pop())
-            queue.reverse()
+        # queue.reverse()
+        # print(queue.pop())
+        # queue.reverse()
+        # pop 은 위치 지정가능
+            print(queue.pop(0))
+            
             
     elif(command[0] == 'size'):
         print(len(queue))
