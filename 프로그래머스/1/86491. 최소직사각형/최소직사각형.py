@@ -13,5 +13,9 @@ def solution(sizes):
         
         if(max_h < val[1]):
             max_h = val[1]
+            
+    # 모범답안 - sum(sizes,[]) 이런식으로 하면 모든 요소가 flatten한 요소로 들어감
+    #        - max(min(size) for size in sizes) : 각 요소 중 작은 값들 중 가장 큰값
+    # solution = lambda sizes: max(sum(sizes, [])) * max(min(size) for size in                  sizes)
     
     return max_w * max_h
