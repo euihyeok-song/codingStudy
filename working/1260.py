@@ -29,12 +29,24 @@ def dfs(node,start,visit,path):
 # bfs는 너비 우선 탐색으로 deque를 사용함
 def bfs(node,start,visit,path):
     
-    # 이동할 수 있는 방향(상하좌우)
+    # 공간복잡도를 위해서 배열 재정의
+    visit = [False] * (N+1)
     
+    # 각 Node마다의 경우의 수를 판단하기 위해서 deque 선언
+    case = deque()
+    case.append(start)
     
-    visit[start] = True
-    path.append(start)
-    
+    while(not case):
+        
+        for i in range(1,len(node)):
+            if node[start][i] == 1 and visit[i] == False:
+                case.append(node[start][i])
+                visit[i] = True
+        
+        path.append(start)
+        case.popleft()
+        start = case[0]
+
     
 
 # 지나간 dfs history를 담을 배열
@@ -46,8 +58,6 @@ print(d_path)
 
 # 지나간 bfs history를 담을 배열
 b_path = []
-# 공간복잡도를 위해서 배열 재정의
-visit = [False] * (N+1)
 
 # bfs
 bfs(node,V,visit,b_path)
