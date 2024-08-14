@@ -8,37 +8,24 @@ def bfs(graph,visit):
     dq = deque()
     dq.append((x,y))
     
+    # x좌표 방향(상 하 좌 우)
+    dx = [0,0,-1,1]
+    # y좌표 방향(상 하 좌 우)
+    dy = [1,-1,0,0]
+    
     visit[0][0] = True
     
     while(dq):
         
-        (x,y) = dq.popleft()
-        print(x)
-        print(y)
+        curr = dq.popleft()
         
-        # 위로 이동    
-        if (y-1) > 0 and graph[y-1][x] == 1 and visit[y-1][x] == False:
-            dq.append((x,y-1))
-            graph[y-1][x] = graph[y][x] + 1
-            
-        # 아래로 이동
-        if (y+1) > 0 and graph[y+1][x] == 1 and visit[y+1][x] == False:
-            dq.append((x,y+1))
-            graph[y+1][x] = graph[y][x] + 1
-            
-        # 왼쪽으로 이동
-        if (x-1) > 0 and graph[y][x-1] == 1 and visit[y][x-1] == False:
-            dq.append((x-1,y))
-            graph[y][x-1] = graph[y][x-1] + 1
-            
-        # 오른쪽으로 이동
-        if (x+1) > 0 and graph[y][x+1] == 1 and visit[y][x+1] == False:
+        for i in range(4):
+            result = (curr[0] + dx[i], curr[1] + dy[i])
 
-            dq.append((x+1,y))
-            graph[y][x+1] = graph[y][x+1] + 1
+            if 0 <= result[0] <= M-1 and 0<= result[1] <= N-1 and visit[result[0],result[1]] == False and graph[result[0]][result[1]] == 1:
+                graph[result[0]][result[1]] = graph[curr[0]][curr[1]] + 1
+                dq.append(result)
             
-        print(dq)
-    
     
     return graph[N-1][M-1]
 
