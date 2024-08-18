@@ -14,8 +14,10 @@ for i in range(N):
 def bfs(graph,visited,start):
     
     dq = deque()
-    dq.append((start,0))
-    cost = 0
+    dq.append(start)
+    visited[start[0]][start[1]] = True
+    
+    cost = 1
     
     # x좌표(상,하,좌,우)
     dx = [0, 0, -1, 1]
@@ -24,20 +26,31 @@ def bfs(graph,visited,start):
     
     while(dq):
         
-        curr = dq.popleft()
+        y,x = dq.popleft()
         
+        for i in range(4):
+            curr_x , curr_y = x + dx[i] , y + dy[i]
+            
+            if ooi(curr_x, curr_y) == True and graph[curr_y][curr_x] == 1 and visited[curr_y][curr_x] == False:
+                visited[curr_y][curr_x] = True
+                dq.append((curr_y,curr_x))
+                cost += 1
+                
     return cost
-        
                 
 def ooi(x,y):
-    return 0 <= x <= N and 0 <= y <= N
+    return 0 <= x < N and 0 <= y < N
 
 for i in range(N):
     for j in range(N):
         if graph[i][j] == 1 and visited[i][j] == False:
-            count.append(bfs(graph,visited,i))
-            
-for i in sorted(count):
-    print(i)    
+            count.append(bfs(graph,visited,(i,j)))
+     
+        
+count.sort()           
+print(len(count))
+for val in count:
+    print(val)
+
     
 
