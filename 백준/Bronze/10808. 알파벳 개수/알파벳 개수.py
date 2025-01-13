@@ -1,13 +1,14 @@
-# 알파벳 개수
+# a부터 z까지 총 26개
+num = [0] * 26
 
 word = list(input())
 
-# 소문자 a부터 z까지의 총 갯수는 26개
-number = [0 for i in range(26)]
-
+# 'a'의 아스키코드는 97
 for val in word:
+    num[ord(val)-97] += 1
     
-    index = ord(val) - ord('a')
-    number[index] += 1
+for j in num:
+    print(j, end=' ')
 
-print(*number)
+
+
