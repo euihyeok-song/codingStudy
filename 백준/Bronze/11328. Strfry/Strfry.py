@@ -1,10 +1,9 @@
-N = int(input())
+from collections import Counter
+import sys
 
-for _ in range(N):
-    
-    first, second = input().split(' ')
-
-    if sorted(first) == sorted(second):
-        print("Possible")
-    else:
-        print("Impossible")
+input = sys.stdin.readline
+n = int(input().strip())
+for _ in range(n):
+    str1, str2 = input().split()
+    # Counter 객체로 각 문자의 빈도수를 한 번에 계산
+    print("Possible" if Counter(str1) == Counter(str2) else "Impossible")
