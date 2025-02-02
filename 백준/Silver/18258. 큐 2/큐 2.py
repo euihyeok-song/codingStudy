@@ -7,36 +7,31 @@ N = int(input())
 
 dq = deque()
 
-for _ in range(N) :
-    i = sys.stdin.readline().split()
-
-    if i[0] == 'push' :
-        dq.append(int(i[1]))
+for _ in range(N):
     
-    elif i[0] == 'pop' :
-        if not dq :
-            print (-1)
-        else :
-            print(dq[0])
-            dq.popleft()
+    command = list(input().rstrip().split(' '))
     
-    elif i[0] == 'size' :
+    if command[0] == "push":
+        dq.append(command[1])
+    elif command[0] == "pop":
+        if dq:
+            print(dq.popleft())
+        else:
+            print(-1)
+    elif command[0] == "size":
         print(len(dq))
-    
-    elif i[0] == 'empty' :
-        if len(dq) == 0 :
-            print(1)
-        else :
+    elif command[0] == "empty":
+        if dq:
             print(0)
-    
-    elif i[0] == 'front' :
-        if not dq:
-            print(-1)
-        else :
+        else:
+            print(1)
+    elif command[0] == "front":
+        if dq:
             print(dq[0])
-    
-    elif i[0] == 'back' :
-        if not dq :
+        else:
             print(-1)
-        else :
+    else:
+        if dq:
             print(dq[-1])
+        else:
+            print(-1)
