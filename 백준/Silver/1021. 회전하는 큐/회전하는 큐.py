@@ -14,7 +14,8 @@ while position:
     if dq[0] == position[0]:
         dq.popleft()
         position.popleft()
-    elif len(dq) - dq.index(position[0]) > dq.index(position[0]):
+        N -= 1
+    elif N  > 2 * dq.index(position[0]):
         dq.append(dq.popleft())
         cnt += 1
     else:
