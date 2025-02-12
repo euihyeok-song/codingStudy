@@ -11,8 +11,8 @@ for _ in range(N):
     stack = []
     
     # A든 B든 홀수개가 들어오면 Pass
-    if word.count('A') % 2 != 0 or word.count('B') % 2 != 0:
-        continue
+    # if word.count('A') % 2 != 0 or word.count('B') % 2 != 0:
+    #    continue
     
     for val in word:
         
