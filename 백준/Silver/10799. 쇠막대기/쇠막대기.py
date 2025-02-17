@@ -1,31 +1,21 @@
-# 쇠막대기
-
 import sys
 
-stick = list(sys.stdin.readline().rstrip('\n'))
+input = sys.stdin.readline
 
+pos = input().rstrip()
 stack = []
+cnt = 0
 
-# 쇠막대기의 갯수
-count = 0
+pos = pos.replace('()','R')
 
-# 직전에 들어온 원소를 구분하기 위한 기록
-record = 0
-
-for val in stick:
+for val in pos:
     
-    if(val == '('):
+    if val == 'R':
+        cnt += len(stack)
+    elif val == '(':
         stack.append(val)
-        record = 0
-    # val == ')'
     else:
-        if(record == 0):
-            stack.pop()
-            count += len(stack)
-            record = 1
-        else:
-            stack.pop()
-            count += 1
-            
-            
-print(count)
+        stack.pop()
+        cnt += 1
+    
+print(cnt)
