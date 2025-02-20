@@ -1,50 +1,39 @@
-# 미로 탐색 - 최소 칸
+import sys
 from collections import deque
 
-# out of index 함수
-def ooi(x,y):
-    return 0 <= x < M and 0 <= y < N
+input = sys.stdin.readline
 
-# bfs함수
-def bfs(graph,visit):
+N ,M = map(int,input().split(' '))
+graph = []
+visited = [[False] * M for _ in range(N)]
+
+for _ in range(N):
+    graph.append(list(map(int,input().rstrip())))
+    
+def bfs():
 
     dq = deque()
-    dq.append((0,0))
-    visit[0][0] = True
     
-    # x좌표 방향(상 하 좌 우)
-    dx = [0,0,-1,1]
-    # y좌표 방향(상 하 좌 우)
-    dy = [-1,1,0,0]
+    dq.append((0,0,1))
+    visited[0][0] = True
     
-    while(dq):
+    # 상 하 좌 우
+    dx = [0, 0, -1, 1]
+    dy = [1, -1, 0, 0]
+    
+    while dq:
+        x, y, cnt= dq.popleft()
         
-        curr = dq.popleft()
+        # 목적지에 도달하면 종료
+        if x == M-1 and y == N-1:
+            return cnt
         
-        for i in range(4):
-            curr_x = curr[0] + dx[i]
-            curr_y = curr[1] + dy[i]
+        for idx in range(4):
+            nx = x + dx[idx]
+            ny = y + dy[idx]
             
-            if ooi(curr_x,curr_y) == True:
-                if graph[curr_y][curr_x] == 1 and visit[curr_y][curr_x] == False:
-                    visit[curr_y][curr_x] = True
-                    graph[curr_y][curr_x] = graph[curr[1]][curr[0]] + 1
-                    dq.append((curr_x,curr_y))
+            if 0 <= nx < M and 0 <= ny < N and graph[ny][nx] == 1 and visited[ny][nx] == False:
+                visited[ny][nx] = True
+                dq.append((nx,ny,cnt+1))
             
-    
-    return graph[N-1][M-1]
-
-# N는 행 M은 열
-N,M = map(int,input().split(' '))
-
-graph = []
-#  이 방식으로 사용하면 [False] * M 크기의 리스트 N개가 하나의 주소를 공유하기 떄문에 문제점 발생
-# visit = [[False]*M]*N       
-visit = [[False] * M for _ in range(N)]
-
-for i in range(N):
-    a = list(map(int,input()))
-    graph.append(a)
-
-print(bfs(graph,visit))
-    
+print(bfs())
