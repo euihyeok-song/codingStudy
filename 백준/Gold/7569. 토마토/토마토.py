@@ -1,37 +1,50 @@
-from collections import deque
+import sys
+from collections import deque 
 
-M, N, H = map(int, input().split())
-tomatoes = []
-for _ in range(H):
-    layer = [list(map(int, input().split())) for _ in range(N)]
-    tomatoes.append(layer)
+input = sys.stdin.readline
 
-dx = [1, -1, 0, 0, 0, 0]
-dy = [0, 0, 1, -1, 0, 0]
-dz = [0, 0, 0, 0, 1, -1]
+M, N, H = map(int,input().rstrip().split(' '))
+visited = [[[False] * M for _ in range(N)] for _ in range(H)]
+graph = [[list(map(int,input().rstrip().split(' '))) for _ in range(N)] for _ in range(H)]
 
-queue = deque()
-days = -1
-for h in range(H):
-    for n in range(N):
-        for m in range(M):
-            if tomatoes[h][n][m] == 1:
-                queue.append((h, n, m, 0))
+dq = deque()
 
-while queue:
-    z, y, x, day = queue.popleft()
-    days = max(days, day)
-    for i in range(6):
-        nz, ny, nx = z + dz[i], y + dy[i], x + dx[i]
-        if 0 <= nz < H and 0 <= ny < N and 0 <= nx < M and tomatoes[nz][ny][nx] == 0:
-            tomatoes[nz][ny][nx] = 1
-            queue.append((nz, ny, nx, day + 1))
+# 상하좌우위아래
+dx = [0,0,-1,1,0,0]
+dy = [1,-1,0,0,0,0]
+dz = [0,0,0,0,1,-1]
 
-for h in range(H):
-    for n in range(N):
-        for m in range(M):
-            if tomatoes[h][n][m] == 0:
-                print(-1)
-                exit()
+for i in range(H):
+    for j in range(N):
+        for k in range(M):
+            if graph[i][j][k] == 1 and visited[i][j][k] is False:
+                dq.append((k,j,i))
+                visited[i][j][k] = True
+                
+def bfs():
+    
+    while dq:
+        x, y, z = dq.popleft()
+        for idx in range(6):
+            nx = x + dx[idx]
+            ny = y + dy[idx]
+            nz = z + dz[idx]
+            
+            if 0 <= nx < M and 0 <= ny < N and 0 <= nz < H and graph[nz][ny][nx] == 0 and visited[nz][ny][nx] is False:
+                dq.append((nx,ny,nz))
+                graph[nz][ny][nx] = graph[z][y][x] + 1
+                visited[nz][ny][nx] = True
 
-print(days)
+bfs()
+
+day = 0
+
+for q in graph: 
+    for p in q:
+        if 0 in p:
+            print(-1)
+            exit()
+        else:
+            day = max(day, max(p))
+            
+print(day-1)
