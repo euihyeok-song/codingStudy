@@ -34,7 +34,7 @@ def bfs():
                     dq.append((nx,ny,is_broke))
                 elif graph[ny][nx] == 1 and is_broke == 0:
                     visited[1][ny][nx] = visited[is_broke][y][x] + 1
-                    dq.append((nx,ny,True))
+                    dq.append((nx,ny,1))
     
     return -1 
 
