@@ -9,7 +9,7 @@ def solution(s):
         dq.append(dq.popleft())
         st = "".join(dq)
         
-        prev = None
+        prev = ""
         while prev != st:
             prev = st
             st = st.replace("()", "").replace("{}", "").replace("[]", "")
