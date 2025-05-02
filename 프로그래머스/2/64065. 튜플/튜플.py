@@ -1,15 +1,18 @@
-from collections import Counter
 import re
 
 def solution(s):
     
-    # 결국 가장 많이 나오는 순서대로 넣어주면 OK
-    cnt = Counter(list(re.sub("{|}","",s).split(',')))
-    result = []
+    case, answer = [], []
+    sets = re.findall(r'\{([\d,]+)\}', s)
     
-    for x,_ in cnt.most_common():
-        result.append(int(x))
-    
-    
-    return result
+    for val in sets:
+        case.append(list(map(int,val.split(','))))
 
+    case.sort(key=lambda x:len(x))
+    
+    for i in case:
+        for j in i:
+            if j not in answer:
+                answer.append(j)
+                
+    return answer
